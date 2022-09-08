@@ -1,10 +1,19 @@
 set SQL_SAFE_UPDATES=0;
 
+delete from student;
 delete from teacher;
 
 set foreign_key_checks = 1;
 
+alter table student auto_increment = 1;
 alter table teacher auto_increment = 1;
+
+insert into student (name, phone, email, fees, street, city, country, postal_code, state)
+values ('Márcio Martin Fábio Figueiredo', '4135172558', 'marcio.figueiredo@email.com.br', 675.00, 'Rua do Camacuan', 'Curitiba', 'Brasil', '81550360', 'Paraná');
+insert into student (name, phone, email, fees, street, city, country, postal_code, state)
+values ('Augusto Arthur Leandro Cavalcanti', '22987362163', 'augusto.cavalcanti@email.com.br', 750.00, 'Rua Rio Grande do Sul', 'Macaé', 'Brasil', '27966072', 'Rio de Janeiro');
+insert into student (name, phone, email, fees, street, city, country, postal_code, state)
+values ('Samuel Luís Fábio Bernardes', '4927289469', 'samuel.bernardes@email.com.br', 450.00, 'Servidão Tarumã', 'Chapecó', 'Brasil', '89802215', 'Santa Catarina');
 
 insert into teacher (name, phone, email, salary, street, city, country, postal_code, state) 
 values ('Alex da Silva Brasil', '11938714876', 'alex.brasil@email.com.br', 3200.00, 'R. Joaquim Távora, 1339', 'São Paulo', 'Brasil', '01415002', 'São Paulo');
