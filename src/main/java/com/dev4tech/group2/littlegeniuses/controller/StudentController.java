@@ -47,7 +47,7 @@ public class StudentController {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<StudentDTO> update(@PathVariable Long id, @RequestBody StudentDTO studentDTO) {
+	public ResponseEntity<StudentDTO> update(@PathVariable Long id, @RequestBody @Valid StudentDTO studentDTO) {
 		Student student = new Student(studentDTO);
 		return ResponseEntity.ok().body(
 				new StudentDTO(studentService.update(id, student)));
@@ -58,4 +58,5 @@ public class StudentController {
 		studentService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+
 }
