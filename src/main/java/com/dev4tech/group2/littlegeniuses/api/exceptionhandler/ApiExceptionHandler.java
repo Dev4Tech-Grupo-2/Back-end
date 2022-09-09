@@ -1,5 +1,7 @@
-package com.dev4tech.group2.littlegeniuses.exception;
+package com.dev4tech.group2.littlegeniuses.api.exceptionhandler;
 
+import com.dev4tech.group2.littlegeniuses.domain.exception.BusinessException;
+import com.dev4tech.group2.littlegeniuses.domain.exception.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;

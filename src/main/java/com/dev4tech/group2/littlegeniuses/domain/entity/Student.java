@@ -1,6 +1,6 @@
-package com.dev4tech.group2.littlegeniuses.entity;
+package com.dev4tech.group2.littlegeniuses.domain.entity;
 
-import com.dev4tech.group2.littlegeniuses.dto.StudentDTO;
+import com.dev4tech.group2.littlegeniuses.api.dto.StudentDTO;
 import lombok.*;
 import org.hibernate.Hibernate;
 

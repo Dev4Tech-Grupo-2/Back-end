@@ -1,8 +1,8 @@
-package com.dev4tech.group2.littlegeniuses.controller;
+package com.dev4tech.group2.littlegeniuses.api.controller;
 
-import com.dev4tech.group2.littlegeniuses.dto.StudentDTO;
-import com.dev4tech.group2.littlegeniuses.entity.Student;
-import com.dev4tech.group2.littlegeniuses.service.StudentService;
+import com.dev4tech.group2.littlegeniuses.api.dto.StudentDTO;
+import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
+import com.dev4tech.group2.littlegeniuses.domain.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

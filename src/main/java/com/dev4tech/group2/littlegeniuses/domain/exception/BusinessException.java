@@ -1,4 +1,4 @@
-package com.dev4tech.group2.littlegeniuses.exception;
+package com.dev4tech.group2.littlegeniuses.domain.exception;
 
 public class BusinessException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.dev4tech.group2.littlegeniuses.service;
+package com.dev4tech.group2.littlegeniuses.domain.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,9 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.dev4tech.group2.littlegeniuses.entity.Teacher;
-import com.dev4tech.group2.littlegeniuses.exception.ResourceNotFoundException;
-import com.dev4tech.group2.littlegeniuses.repository.TeacherRepository;
+import com.dev4tech.group2.littlegeniuses.domain.entity.Teacher;
+import com.dev4tech.group2.littlegeniuses.domain.exception.ResourceNotFoundException;
+import com.dev4tech.group2.littlegeniuses.domain.repository.TeacherRepository;
 
 @Service
 public class TeacherService {

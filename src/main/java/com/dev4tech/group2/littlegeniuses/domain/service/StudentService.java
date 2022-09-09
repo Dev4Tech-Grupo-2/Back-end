@@ -1,9 +1,9 @@
-package com.dev4tech.group2.littlegeniuses.service;
+package com.dev4tech.group2.littlegeniuses.domain.service;
 
-import com.dev4tech.group2.littlegeniuses.entity.Student;
-import com.dev4tech.group2.littlegeniuses.exception.BusinessException;
-import com.dev4tech.group2.littlegeniuses.exception.ResourceNotFoundException;
-import com.dev4tech.group2.littlegeniuses.repository.StudentRepository;
+import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
+import com.dev4tech.group2.littlegeniuses.domain.exception.BusinessException;
+import com.dev4tech.group2.littlegeniuses.domain.exception.ResourceNotFoundException;
+import com.dev4tech.group2.littlegeniuses.domain.repository.StudentRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

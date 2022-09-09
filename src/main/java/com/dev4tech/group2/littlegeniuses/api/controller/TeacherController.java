@@ -1,4 +1,4 @@
-package com.dev4tech.group2.littlegeniuses.controller;
+package com.dev4tech.group2.littlegeniuses.api.controller;
 
 import java.net.URI;
 
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.dev4tech.group2.littlegeniuses.dto.TeacherDTO;
-import com.dev4tech.group2.littlegeniuses.entity.Teacher;
-import com.dev4tech.group2.littlegeniuses.service.TeacherService;
+import com.dev4tech.group2.littlegeniuses.api.dto.TeacherDTO;
+import com.dev4tech.group2.littlegeniuses.domain.entity.Teacher;
+import com.dev4tech.group2.littlegeniuses.domain.service.TeacherService;
 
 @RestController
 @RequestMapping(path="/teacher")

@@ -1,7 +1,7 @@
-package com.dev4tech.group2.littlegeniuses.repository;
+package com.dev4tech.group2.littlegeniuses.domain.repository;
 
-import com.dev4tech.group2.littlegeniuses.entity.Student;
-import com.dev4tech.group2.littlegeniuses.entity.Teacher;
+import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
+import com.dev4tech.group2.littlegeniuses.domain.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

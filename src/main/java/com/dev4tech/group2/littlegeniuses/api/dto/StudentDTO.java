@@ -1,6 +1,6 @@
-package com.dev4tech.group2.littlegeniuses.dto;
+package com.dev4tech.group2.littlegeniuses.api.dto;
 
-import com.dev4tech.group2.littlegeniuses.entity.Student;
+import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

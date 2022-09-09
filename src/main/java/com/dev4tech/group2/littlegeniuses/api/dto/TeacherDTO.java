@@ -1,4 +1,4 @@
-package com.dev4tech.group2.littlegeniuses.dto;
+package com.dev4tech.group2.littlegeniuses.api.dto;
 
 import java.math.BigDecimal;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import com.dev4tech.group2.littlegeniuses.entity.Teacher;
+import com.dev4tech.group2.littlegeniuses.domain.entity.Teacher;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

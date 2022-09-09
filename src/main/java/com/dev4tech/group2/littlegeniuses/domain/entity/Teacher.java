@@ -1,4 +1,4 @@
-package com.dev4tech.group2.littlegeniuses.entity;
+package com.dev4tech.group2.littlegeniuses.domain.entity;
 
 import java.math.BigDecimal;
 
@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.dev4tech.group2.littlegeniuses.dto.TeacherDTO;
+import com.dev4tech.group2.littlegeniuses.api.dto.TeacherDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
