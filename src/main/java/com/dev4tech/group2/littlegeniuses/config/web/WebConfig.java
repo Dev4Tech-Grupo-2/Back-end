@@ -1,4 +1,4 @@
-package com.dev4tech.group2.littlegeniuses.config;
+package com.dev4tech.group2.littlegeniuses.config.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

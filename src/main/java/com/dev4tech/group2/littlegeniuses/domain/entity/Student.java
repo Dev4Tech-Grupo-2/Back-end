@@ -1,13 +1,14 @@
 package com.dev4tech.group2.littlegeniuses.domain.entity;
 
-import com.dev4tech.group2.littlegeniuses.api.dto.StudentDTO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
-
 
 @Getter
 @Setter
@@ -46,19 +47,6 @@ public class Student {
 
     @Column(name = "state", nullable = false)
     private String state;
-
-    public Student(StudentDTO student) {
-        this.id = student.getId();
-        this.name = student.getName();
-        this.phone = student.getPhone();
-        this.email = student.getEmail();
-        this.fees = student.getFees();
-        this.street = student.getStreet();
-        this.city = student.getCity();
-        this.country = student.getCountry();
-        this.postalCode = student.getPostalCode();
-        this.state = student.getState();
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -4,10 +4,7 @@ import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
 import com.dev4tech.group2.littlegeniuses.domain.exception.BusinessException;
 import com.dev4tech.group2.littlegeniuses.domain.exception.ResourceNotFoundException;
 import com.dev4tech.group2.littlegeniuses.domain.repository.StudentRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,10 +14,6 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
-
-    public Page<Student> findAll(Pageable pageable) {
-        return studentRepository.findAll(pageable);
-    }
 
     public Student findById(Long studentId) {
         return studentRepository.findById(studentId)
@@ -39,13 +32,8 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student update(Long id, Student student) {
-        Student t = findById(id);
-        BeanUtils.copyProperties(student, t, "id");
-        return save(t);
-    }
-
     public void delete(Long id) {
         studentRepository.delete(findById(id));
     }
+
 }

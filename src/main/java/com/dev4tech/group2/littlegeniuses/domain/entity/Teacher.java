@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.dev4tech.group2.littlegeniuses.api.dto.TeacherDTO;
+import com.dev4tech.group2.littlegeniuses.api.model.TeacherDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

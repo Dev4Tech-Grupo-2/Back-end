@@ -1,4 +1,4 @@
-package com.dev4tech.group2.littlegeniuses.api.dto;
+package com.dev4tech.group2.littlegeniuses.api.model;
 
 import java.math.BigDecimal;
 
