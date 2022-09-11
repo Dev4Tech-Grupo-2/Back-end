@@ -8,23 +8,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.dev4tech.group2.littlegeniuses.api.model.TeacherDTO;
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Teacher {
 
 	@Id
-	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "teacher_id")
 	private Long id;
 	
 	@Column(name = "name", nullable = false)
@@ -54,16 +52,4 @@ public class Teacher {
 	@Column(name = "state", nullable = false)
 	private String state;
 	
-	public Teacher(TeacherDTO teacher) {
-		this.id = teacher.getId();
-		this.name = teacher.getName();
-		this.phone = teacher.getPhone();
-		this.email = teacher.getEmail();
-		this.salary = teacher.getSalary();
-		this.street = teacher.getStreet();
-		this.city = teacher.getCity();
-		this.country = teacher.getCountry();
-		this.postalCode = teacher.getPostalCode();
-		this.state = teacher.getState();
-	}
 }

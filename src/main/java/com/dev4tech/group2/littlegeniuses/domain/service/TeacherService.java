@@ -1,12 +1,13 @@
 package com.dev4tech.group2.littlegeniuses.domain.service;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.dev4tech.group2.littlegeniuses.domain.entity.Teacher;
+import com.dev4tech.group2.littlegeniuses.domain.exception.ForeignKeyException;
 import com.dev4tech.group2.littlegeniuses.domain.exception.ResourceNotFoundException;
 import com.dev4tech.group2.littlegeniuses.domain.repository.TeacherRepository;
 
@@ -29,13 +30,11 @@ public class TeacherService {
 		return teacherRepository.save(teacher);
 	}
 	
-	public Teacher update(Long id, Teacher teacher) {
-		Teacher t = findById(id);
-		BeanUtils.copyProperties(teacher, t, "id");
-		return save(t);
-	}
-	
 	public void delete(Long id) {
-		teacherRepository.delete(findById(id));
+		try {
+			teacherRepository.delete(findById(id));
+		} catch (DataIntegrityViolationException e) {
+			throw new ForeignKeyException(id);
+		}
 	}
 }

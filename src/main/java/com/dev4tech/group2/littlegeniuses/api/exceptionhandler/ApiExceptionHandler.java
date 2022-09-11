@@ -1,6 +1,7 @@
 package com.dev4tech.group2.littlegeniuses.api.exceptionhandler;
 
 import com.dev4tech.group2.littlegeniuses.domain.exception.BusinessException;
+import com.dev4tech.group2.littlegeniuses.domain.exception.ForeignKeyException;
 import com.dev4tech.group2.littlegeniuses.domain.exception.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -78,6 +79,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+    
+    // Method for handling entity exceptions in use 
+    @ExceptionHandler(ForeignKeyException.class)
+    private ResponseEntity<?> handleForeignKeyException(RuntimeException ex, WebRequest request) {
+    	HttpStatus status = HttpStatus.BAD_REQUEST;
+    	ProblemType problemType = ProblemType.ENTITY_IN_USE;
+    	String detail = ex.getMessage();
+    	Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
+    	return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
 
     private ResponseEntity<Object> handleValidationInternal(Exception ex, HttpHeaders headers, HttpStatus status,
