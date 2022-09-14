@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import com.dev4tech.group2.littlegeniuses.api.model.request.StudentIdModelReques
 import com.dev4tech.group2.littlegeniuses.api.model.response.ClassModelResponse;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.assembler.ClassModelResponseAssembler;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.disassembler.ClassModelRequestDisassembler;
+import com.dev4tech.group2.littlegeniuses.api.openapi.controller.ClassControllerOpenApi;
 import com.dev4tech.group2.littlegeniuses.domain.entity.Class;
 import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
 import com.dev4tech.group2.littlegeniuses.domain.entity.Teacher;
@@ -33,7 +35,7 @@ import com.dev4tech.group2.littlegeniuses.domain.service.TeacherService;
 
 @RestController
 @RequestMapping(path = "/classes")
-public class ClassController {
+public class ClassController implements ClassControllerOpenApi {
 
 	@Autowired
 	private ClassService classService;
@@ -50,7 +52,7 @@ public class ClassController {
 	@Autowired
 	private ClassModelRequestDisassembler classModelRequestDisassembler;
 	
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public Page<ClassModelResponse> findAll(
 			@PageableDefault(value = 10) Pageable pageable) {
 		Page<Class> classes = classService.findAll(pageable);
@@ -59,25 +61,25 @@ public class ClassController {
 		return classModel;
 	}
 	
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE) 
 	public ClassModelResponse findById(@PathVariable Long id) {
 		Class c = classService.findById(id);
 		return classModelResponseAssembler.toModel(c);
 	}
 	
-	@PostMapping
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public ClassModelResponse insert(
 			@RequestBody @Valid ClassModelRequest classModelRequest) {
 		Class c = classModelRequestDisassembler.toDomainObject(classModelRequest);
-		Teacher teacher = teacherService.findById(classModelRequest.getTeacher().getId());
+		Teacher teacher = teacherService.findById(classModelRequest.getTeacherId());
 		c = classService.save(c);
 		c.setTeacher(teacher);
 		ClassModelResponse classModelResponse = classModelResponseAssembler.toModel(c);
 		return classModelResponse;
 	}
 	
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ClassModelResponse update(@PathVariable Long id, 
 			@RequestBody @Valid ClassModelRequest classModelRequest) {
 		Class c = classService.findById(id);
@@ -87,12 +89,12 @@ public class ClassController {
 		return classModelResponse;
 	}
 	
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "/{id}", produces = {})
 	public void delete(@PathVariable Long id) {
 		classService.delete(id);
 	}
 	
-	@PutMapping(path = "/{id}/student")
+	@PutMapping(path = "/{id}/student", produces = {})
 	@ResponseStatus(HttpStatus.OK)
 	public void insertStudentInClass(@PathVariable Long id, 
 			@RequestBody @Valid StudentIdModelRequest studentId) {
@@ -104,7 +106,7 @@ public class ClassController {
 		classService.update(id, c);
 	}
 	
-	@DeleteMapping("/{id}/student")
+	@DeleteMapping(path = "/{id}/student", produces = {})
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteStudentInClass(@PathVariable Long id, 
 			@RequestBody @Valid StudentIdModelRequest student) {
