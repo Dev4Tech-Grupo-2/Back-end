@@ -4,6 +4,7 @@ import com.dev4tech.group2.littlegeniuses.api.model.request.StudentModelRequest;
 import com.dev4tech.group2.littlegeniuses.api.model.response.StudentModelResponse;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.assembler.StudentModelResponseAssembler;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.disassembler.StudentModelRequestDisassembler;
+import com.dev4tech.group2.littlegeniuses.config.security.CheckSecurity;
 import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
 import com.dev4tech.group2.littlegeniuses.domain.repository.StudentRepository;
 import com.dev4tech.group2.littlegeniuses.domain.service.StudentService;
@@ -32,6 +33,7 @@ public class StudentController {
     @Autowired
     private StudentModelRequestDisassembler studentModelRequestDisassembler;
 
+    @CheckSecurity.Students.CanConsult
     @GetMapping
     public Page<StudentModelResponse> findAll(@PageableDefault(value = 10) Pageable pageable) {
         Page<Student> students = studentRepository.findAll(pageable);
@@ -41,6 +43,7 @@ public class StudentController {
         return studentModelResponse;
     }
 
+    @CheckSecurity.Students.CanConsult
     @GetMapping(path = "/{id}")
     public StudentModelResponse findById(@PathVariable Long id) {
         Student student = studentService.findById(id);
@@ -48,6 +51,7 @@ public class StudentController {
         return studentModelResponseAssembler.toModel(student);
     }
 
+    @CheckSecurity.Students.CanEdit
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StudentModelResponse insert(@RequestBody @Valid StudentModelRequest studentModelRequest) {
@@ -60,6 +64,7 @@ public class StudentController {
         return studentModelResponse;
     }
 
+    @CheckSecurity.Students.CanEdit
     @PutMapping(value = "/{id}")
     public StudentModelResponse update(@PathVariable Long id, @RequestBody @Valid StudentModelRequest studentModelRequest) {
         Student currentStudent = studentService.findById(id);
@@ -73,6 +78,7 @@ public class StudentController {
         return studentModelResponse;
     }
 
+    @CheckSecurity.Students.CanEdit
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {

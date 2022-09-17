@@ -5,13 +5,17 @@ delete from class_student;
 delete from class;
 delete from student;
 delete from teacher;
+delete from user_account;
+delete from oauth_client_details;
 
 set foreign_key_checks = 1;
 
 alter table class auto_increment = 1;
 alter table student auto_increment = 1;
 alter table teacher auto_increment = 1;
+alter table user_account auto_increment = 1;
 
+# Student
 insert into student (name, phone, email, fees, street, city, country, postal_code, state)
 values ('Márcio Martin Fábio Figueiredo', '4135172558', 'marcio.figueiredo@email.com.br', 675.00, 'Rua do Camacuan', 'Curitiba', 'Brasil', '81550360', 'Paraná');
 insert into student (name, phone, email, fees, street, city, country, postal_code, state)
@@ -37,6 +41,7 @@ values ('Erica Siqueira', '11971882222', 'erica.siqueira@email.com.br', 950.00, 
 insert into student (name, phone, email, fees, street, city, country, postal_code, state)
 values ('Rosa Campos', '11997717817', 'rosa.campos@email.com.br', 950.00, 'Rua Marcial, 425', 'São Paulo', 'Brasil', '03169040', 'São Paulo');
 
+# Teacher
 insert into teacher (name, phone, email, salary, street, city, country, postal_code, state) 
 values ('Alex da Silva Brasil', '11938714876', 'alex.brasil@email.com.br', 3200.00, 'R. Joaquim Távora, 1339', 'São Paulo', 'Brasil', '01415002', 'São Paulo');
 insert into teacher (name, phone, email, salary, street, city, country, postal_code, state) 
@@ -58,10 +63,12 @@ values ('Higor Correa Filho', '11930119267', 'higor.filho@email.com.br', 5000.00
 insert into teacher (name, phone, email, salary, street, city, country, postal_code, state) 
 values ('Isaque Marques de Jesus', '24927313337', 'isaque.jesus@email.com.br', 5000.00, 'R. Atília, 2', 'Rio de Janeiro', 'Brasil', '20220000', 'Rio de Janeiro');
 
+# Class
 insert into class (grade, teacher_id) values ('1ª série', 1);
 insert into class (grade, teacher_id) values ('2ª série', 2);
 insert into class (grade, teacher_id) values ('3ª série', 3);
 
+# Class_Student
 insert into class_student (class_id, student_id) values (1, 1);
 insert into class_student (class_id, student_id) values (1, 2);
 insert into class_student (class_id, student_id) values (1, 3);
@@ -74,3 +81,19 @@ insert into class_student (class_id, student_id) values (2, 3);
 insert into class_student (class_id, student_id) values (2, 4);
 insert into class_student (class_id, student_id) values (2, 5);
 insert into class_student (class_id, student_id) values (2, 6);
+
+# User_Account
+insert into user_account (id, name, email, password, registration_date) values
+(1, 'Renato Borges Viana', 'renato.admin@email.com', '$2a$12$HL8GQYyCww2O6LB2LC/Ba.lFyINww7kkbltwm1gKPLla6SLk6HhoC', utc_timestamp);
+
+# Oauth_Client_Details
+insert into oauth_client_details (
+  client_id, resource_ids, client_secret,
+  scope, authorized_grant_types, web_server_redirect_uri, authorities,
+  access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+  'little-geniuses-app', null, '$2a$12$e9rezz5b29FnwUBY9SIvrehC.1owDd6hozh5d1ZHIhhgAnkdmH0UK',
+  'READ,WRITE', 'password,authorization_code', 'http://localhost:8080,http://localhost:8080/swagger-ui/oauth2-redirect.html', null,
+  304167, null, null
+);

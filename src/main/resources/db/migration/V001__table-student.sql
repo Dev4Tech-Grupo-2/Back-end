@@ -8,6 +8,6 @@ create table if not exists student (
     phone varchar(255) not null, 
     postal_code varchar(255) not null, 
     state varchar(255) not null, 
-    street varchar(255) not null, 
+    street varchar(255) not null,
     primary key (student_id)
 ) engine=InnoDB;
