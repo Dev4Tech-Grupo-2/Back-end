@@ -5,6 +5,7 @@ import com.dev4tech.group2.littlegeniuses.api.model.request.StudentIdModelReques
 import com.dev4tech.group2.littlegeniuses.api.model.response.ClassModelResponse;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.assembler.ClassModelResponseAssembler;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.disassembler.ClassModelRequestDisassembler;
+import com.dev4tech.group2.littlegeniuses.api.openapi.controller.ClassControllerOpenApi;
 import com.dev4tech.group2.littlegeniuses.config.security.CheckSecurity;
 import com.dev4tech.group2.littlegeniuses.domain.entity.Class;
 import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,7 +26,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/classes")
-public class ClassController {
+public class ClassController implements ClassControllerOpenApi {
 
     @Autowired
     private ClassService classService;
@@ -42,7 +44,7 @@ public class ClassController {
     private ClassModelRequestDisassembler classModelRequestDisassembler;
 
     @CheckSecurity.Classes.CanConsult
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<ClassModelResponse> findAll(
             @PageableDefault(value = 10) Pageable pageable) {
         Page<Class> classes = classService.findAll(pageable);
@@ -52,19 +54,19 @@ public class ClassController {
     }
 
     @CheckSecurity.Classes.CanConsult
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ClassModelResponse findById(@PathVariable Long id) {
         Class c = classService.findById(id);
         return classModelResponseAssembler.toModel(c);
     }
 
     @CheckSecurity.Classes.CanEdit
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ClassModelResponse insert(
             @RequestBody @Valid ClassModelRequest classModelRequest) {
         Class c = classModelRequestDisassembler.toDomainObject(classModelRequest);
-        Teacher teacher = teacherService.findById(classModelRequest.getTeacher().getId());
+        Teacher teacher = teacherService.findById(classModelRequest.getTeacherId());
         c = classService.save(c);
         c.setTeacher(teacher);
         ClassModelResponse classModelResponse = classModelResponseAssembler.toModel(c);
@@ -72,7 +74,7 @@ public class ClassController {
     }
 
     @CheckSecurity.Classes.CanEdit
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ClassModelResponse update(@PathVariable Long id,
                                      @RequestBody @Valid ClassModelRequest classModelRequest) {
         Class c = classService.findById(id);
@@ -88,7 +90,7 @@ public class ClassController {
         classService.delete(id);
     }
 
-    @PutMapping(path = "/{id}/student")
+    @PutMapping(path = "/{id}/student", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void insertStudentInClass(@PathVariable Long id,
                                      @RequestBody @Valid StudentIdModelRequest studentId) {
@@ -112,4 +114,5 @@ public class ClassController {
         c.setStudents(students);
         classService.update(id, c);
     }
+
 }

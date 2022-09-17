@@ -4,6 +4,7 @@ import com.dev4tech.group2.littlegeniuses.api.model.request.StudentModelRequest;
 import com.dev4tech.group2.littlegeniuses.api.model.response.StudentModelResponse;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.assembler.StudentModelResponseAssembler;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.disassembler.StudentModelRequestDisassembler;
+import com.dev4tech.group2.littlegeniuses.api.openapi.controller.StudentControllerOpenApi;
 import com.dev4tech.group2.littlegeniuses.config.security.CheckSecurity;
 import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
 import com.dev4tech.group2.littlegeniuses.domain.repository.StudentRepository;
@@ -13,13 +14,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/students")
-public class StudentController {
+public class StudentController implements StudentControllerOpenApi {
 
     @Autowired
     private StudentRepository studentRepository;
@@ -34,7 +36,7 @@ public class StudentController {
     private StudentModelRequestDisassembler studentModelRequestDisassembler;
 
     @CheckSecurity.Students.CanConsult
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<StudentModelResponse> findAll(@PageableDefault(value = 10) Pageable pageable) {
         Page<Student> students = studentRepository.findAll(pageable);
 
@@ -44,7 +46,7 @@ public class StudentController {
     }
 
     @CheckSecurity.Students.CanConsult
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StudentModelResponse findById(@PathVariable Long id) {
         Student student = studentService.findById(id);
 
@@ -52,7 +54,7 @@ public class StudentController {
     }
 
     @CheckSecurity.Students.CanEdit
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public StudentModelResponse insert(@RequestBody @Valid StudentModelRequest studentModelRequest) {
         Student student = studentModelRequestDisassembler.toDomainObject(studentModelRequest);
@@ -65,7 +67,7 @@ public class StudentController {
     }
 
     @CheckSecurity.Students.CanEdit
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public StudentModelResponse update(@PathVariable Long id, @RequestBody @Valid StudentModelRequest studentModelRequest) {
         Student currentStudent = studentService.findById(id);
 
@@ -79,7 +81,7 @@ public class StudentController {
     }
 
     @CheckSecurity.Students.CanEdit
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/{id}", produces = {})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         studentService.delete(id);

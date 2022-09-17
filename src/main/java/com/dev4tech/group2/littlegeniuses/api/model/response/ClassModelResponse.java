@@ -3,9 +3,7 @@ package com.dev4tech.group2.littlegeniuses.api.model.response;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.dev4tech.group2.littlegeniuses.domain.entity.Student;
-import com.dev4tech.group2.littlegeniuses.domain.entity.Teacher;
-
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,12 +11,14 @@ import lombok.Setter;
 @Setter
 public class ClassModelResponse {
 
+	@ApiModelProperty(example = "1")
 	private Long id;
 	
+	@ApiModelProperty(example = "1ª série")
 	private String grade;
 	
-	private Teacher teacher;
+	private TeacherModelResponse teacher;
 	
-	private Set<Student> students = new HashSet<>();
+	private Set<StudentModelResponse> students = new HashSet<>();
 	
 }
