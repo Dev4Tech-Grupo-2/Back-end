@@ -6,22 +6,11 @@ import java.util.function.Consumer;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import com.dev4tech.group2.littlegeniuses.api.exceptionhandler.Problem;
-import com.dev4tech.group2.littlegeniuses.api.model.response.ClassModelResponse;
-import com.dev4tech.group2.littlegeniuses.api.model.response.StudentModelResponse;
-import com.dev4tech.group2.littlegeniuses.api.model.response.TeacherModelResponse;
-import com.dev4tech.group2.littlegeniuses.api.model.response.UserAccountModelResponse;
-import com.dev4tech.group2.littlegeniuses.api.openapi.model.ClassModelOpenApi;
-import com.dev4tech.group2.littlegeniuses.api.openapi.model.PageableModelOpenApi;
-import com.dev4tech.group2.littlegeniuses.api.openapi.model.StudentModelOpenApi;
-import com.dev4tech.group2.littlegeniuses.api.openapi.model.TeacherModelOpenApi;
-import com.dev4tech.group2.littlegeniuses.api.openapi.model.UserAccountModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -30,7 +19,6 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RepresentationBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseBuilder;
-import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.HttpAuthenticationScheme;
@@ -56,15 +44,6 @@ public class SpringFoxConfig {
 				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
 				.additionalModels(typeResolver.resolve(Problem.class))
-				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class).useDefaultResponseMessages(false)
-				.alternateTypeRules(AlternateTypeRules.newRule(
-						typeResolver.resolve(Page.class, ClassModelResponse.class), ClassModelOpenApi.class))
-				.alternateTypeRules(AlternateTypeRules.newRule(
-						typeResolver.resolve(Page.class, StudentModelResponse.class), StudentModelOpenApi.class))
-				.alternateTypeRules(AlternateTypeRules.newRule(
-						typeResolver.resolve(Page.class, TeacherModelResponse.class), TeacherModelOpenApi.class))
-				.alternateTypeRules(AlternateTypeRules.newRule(
-						typeResolver.resolve(Page.class, UserAccountModelResponse.class), UserAccountModelOpenApi.class))
 				.apiInfo(apiInfo())
 				.securityContexts(Arrays.asList(securityContext()))
 				.securitySchemes(List.of(authenticationScheme()))
