@@ -6,6 +6,7 @@ import com.dev4tech.group2.littlegeniuses.api.model.request.UserAccountWithPassw
 import com.dev4tech.group2.littlegeniuses.api.model.response.UserAccountModelResponse;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.assembler.UserAccountModelResponseAssembler;
 import com.dev4tech.group2.littlegeniuses.api.modelmapper.disassembler.UserAccountModelRequestDisassembler;
+import com.dev4tech.group2.littlegeniuses.api.openapi.controller.UserAccountControllerOpenApi;
 import com.dev4tech.group2.littlegeniuses.config.security.CheckSecurity;
 import com.dev4tech.group2.littlegeniuses.domain.entity.UserAccount;
 import com.dev4tech.group2.littlegeniuses.domain.repository.UserAccountRepository;
@@ -15,13 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/users")
-public class UserAccountController {
+public class UserAccountController implements UserAccountControllerOpenApi {
 
     @Autowired
     private UserAccountRepository userAccountRepository;
@@ -36,7 +38,7 @@ public class UserAccountController {
     private UserAccountModelRequestDisassembler userAccountModelRequestDisassembler;
 
     @CheckSecurity.Users.CanConsult
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<UserAccountModelResponse> findAll(@PageableDefault(value = 10) Pageable pageable) {
         Page<UserAccount> userAccounts = userAccountRepository.findAll(pageable);
 
@@ -46,14 +48,14 @@ public class UserAccountController {
     }
 
     @CheckSecurity.Users.CanConsult
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserAccountModelResponse findById(@PathVariable Long id) {
         UserAccount userAccount = userAccountService.findById(id);
 
         return userAccountModelResponseAssembler.toModel(userAccount);
     }
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public UserAccountModelResponse insert(@RequestBody @Valid UserAccountWithPasswordModelRequest userAccountModelRequest) {
         UserAccount userAccount = userAccountModelRequestDisassembler.toDomainObject(userAccountModelRequest);
@@ -66,7 +68,7 @@ public class UserAccountController {
     }
 
     @CheckSecurity.Users.CanEdit
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserAccountModelResponse update(@PathVariable Long id, @RequestBody @Valid UserAccountModelRequest userAccountModelRequest) {
         UserAccount currentUserAccount = userAccountService.findById(id);
 
@@ -80,7 +82,7 @@ public class UserAccountController {
     }
 
     @CheckSecurity.Users.CanEdit
-    @PutMapping("/{userId}/password")
+    @PutMapping(path = "/{userId}/password", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changePassword(@PathVariable Long userId, @RequestBody @Valid PasswordModelRequest password) {
         userAccountService.changePassword(userId, password.getCurrentPassword(), password.getNewPassword());
