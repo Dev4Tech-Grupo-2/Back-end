@@ -65,10 +65,11 @@ public class ClassController implements ClassControllerOpenApi {
     @ResponseStatus(HttpStatus.CREATED)
     public ClassModelResponse insert(
             @RequestBody @Valid ClassModelRequest classModelRequest) {
-        Class c = classModelRequestDisassembler.toDomainObject(classModelRequest);
-        Teacher teacher = teacherService.findById(classModelRequest.getTeacherId());
+    	Class c = new Class();
+        c.setGrade(classModelRequest.getGrade());
+    	Teacher teacher = teacherService.findById(classModelRequest.getTeacherId());
+    	c.setTeacher(teacher);
         c = classService.save(c);
-        c.setTeacher(teacher);
         ClassModelResponse classModelResponse = classModelResponseAssembler.toModel(c);
         return classModelResponse;
     }
