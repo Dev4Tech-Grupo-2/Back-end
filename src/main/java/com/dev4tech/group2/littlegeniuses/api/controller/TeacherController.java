@@ -61,7 +61,7 @@ public class TeacherController implements TeacherControllerOpenApi {
     public TeacherModelResponse update(@PathVariable Long id, @RequestBody @Valid TeacherModelRequest teacherModelRequest) {
         Teacher teacher = teacherService.findById(id);
         teacherModelRequestDisassembler.copyToDomainObject(teacherModelRequest, teacher);
-        teacher = teacherService.save(teacher);
+        teacher = teacherService.update(teacher);
         TeacherModelResponse teacherModelResponse = teacherModelResponseAssembler.toModel(teacher);
         return teacherModelResponse;
     }
